@@ -1,0 +1,1 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=xyz.utools.web3j.Web3jAutoConfiguration,xyz.utools.web3j.Web3jContractAutoConfiguration

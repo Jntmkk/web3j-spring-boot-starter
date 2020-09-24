@@ -1,0 +1,7 @@
+web3j:
+  contract-package: xyz.utools.web3j.contracts
+  rpc-url: http://127.0.0.1:7545
+  key: f58321420b5322e266a7364f9169faefff2f497265d90b1d5145071f301111ce
+  contracts:
+    UserContract: new
+    TaskContract: new
