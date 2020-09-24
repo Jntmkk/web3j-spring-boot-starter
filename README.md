@@ -21,7 +21,7 @@ Maven:
 
 ```yml
 web3j:
-	# 合约所在的包路径，将自动扫描所有继承自 org.web3j.tx.contract 的类，暂时不提供注解的方式。
+  # 合约所在的包路径，将自动扫描所有继承自 org.web3j.tx.contract 的类，暂时不提供注解的方式。
   contract-package: xyz.utools.web3j.contracts
   # 服务器地址示例，国内用户建议使用本地测试
   rpc-url: http://127.0.0.1:7545
@@ -41,7 +41,7 @@ web3j:
 使用方式：
 
 ```java
-@service
+@Service
 public interface DemoService{
   @autowired
   UserContract userContact;
@@ -69,7 +69,7 @@ contract Register {
 contract UserSummary {
 	address regAddr;
   Register reg;
-	constructor() public {
+	constructor(string regAddr) public {
     regAddr = msg.sender;
     reg = Register(regAddr);
   }
@@ -80,9 +80,9 @@ contract UserSummary {
 加载合约时，由于无法找到`string regAddr`依赖将会报错。解决方法是：实现`CandidateMethodPostProcessor`接口。示例如下：
 
 ```java
-@configuration
-pulic class Demo{
-  @bean
+@Configuration
+public class Demo{
+  @Bean
   CandidateMethodPostProcessor postProcessor(){
     new AddressPostProcessor();
   }
@@ -103,5 +103,6 @@ pulic class Demo{
 }
 ```
 
+同时本工具解决了合约间的依赖关系，但合约地址字段命名有要求。如上文中的`string regAddr`改为`Address userContract`就能自动处理。
 
 
