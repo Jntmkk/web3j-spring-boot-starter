@@ -6,9 +6,8 @@
 示例应用[在此](https://)
 
 为了使用本工具，请包含以下依赖：
-
+**暂时未发布到中央仓库**
 Maven:
-
 ```xml
 <dependency>
     <groupId>xyz.utools.web3j</groupId>
@@ -29,7 +28,7 @@ web3j:
   key: f58321420b5322e266a7364f9169faefff2f497265d90b1d5145071f301111ce
   # 合约信息，名称请严格对应类名，值可为合约地址或“new”,为new是将部署合约。合约地址请去掉 0x
   contracts:
-  	# 示例，将从此地址加载合约
+    # 示例，将从此地址加载合约
     UserContract: b07812e8d6ab69584c5361bc09b4e2edc187c029
     # 重新部署合约
     TaskContract: new
