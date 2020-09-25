@@ -6,6 +6,7 @@
 示例应用[在此](https://)
 
 为了使用本工具，请包含以下依赖：
+
 **暂时未发布到中央仓库**
 Maven:
 ```xml
@@ -93,7 +94,7 @@ public class Demo{
             while (iterator.hasNext()) {
                 Map.Entry<String, DefaultDependencyHolder.Dependency> next = iterator.next();
                 if (next.getKey().equals("regAddr")) {
-                    UserContract userContract = beanFactory.getBean("UserContract", UserContract.class);
+                    UserContract userContract = beanFactory.getBean("dependContractName", UserContract.class);
                     next.getValue().setObj(userContract.getContractAddress());
                 }
             }
