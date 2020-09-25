@@ -17,13 +17,19 @@
     <properties>
         <java.version>11</java.version>
     </properties>
-
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/utools/web3j-spring-boot-stater</url>
+        </repository>
+    </distributionManagement>
     <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>org.fisco-bcos</groupId>-->
-<!--            <artifactId>web3sdk</artifactId>-->
-<!--            <version>2.0.2</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.fisco-bcos</groupId>-->
+        <!--            <artifactId>web3sdk</artifactId>-->
+        <!--            <version>2.0.2</version>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
