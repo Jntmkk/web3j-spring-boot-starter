@@ -3,10 +3,10 @@ package xyz.utools.web3j;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
@@ -14,17 +14,11 @@ import org.web3j.tx.Contract;
 import org.web3j.tx.gas.ContractGasProvider;
 import xyz.utools.web3j.common.DefaultDependencyHolder;
 import xyz.utools.web3j.common.DependencyHolder;
-import xyz.utools.web3j.contracts.UserContract;
 import xyz.utools.web3j.inter.*;
 import xyz.utools.web3j.registerar.ContractsRegistrar;
 import xyz.utools.web3j.util.ClassUtils;
 
 import java.util.*;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static jnr.posix.util.MethodName.getMethodName;
 
 @Configuration
 @ConditionalOnBean(value = {Web3j.class, Credentials.class, ContractGasProvider.class})
@@ -41,10 +35,6 @@ public class Web3jContractAutoConfiguration {
         return new DefaultCandidateMethodPostProcessor();
     }
 
-    @Bean
-    public CandidateMethodPostProcessor addressPostProcessor() {
-        return new AddressPostProcessor();
-    }
 
     public static class DefaultCandidateMethodPostProcessor implements CandidateMethodPostProcessor {
         @Override
@@ -70,10 +60,16 @@ public class Web3jContractAutoConfiguration {
         @Override
         public void resolveCandidateMethodParams(DependencyHolder holder, BeanFactory beanFactory, Class<? extends Contract> cls) {
             Iterator<Map.Entry<String, DefaultDependencyHolder.Dependency>> iterator = holder.getDependency().entrySet().iterator();
+            Set<String> set = new HashSet<>();
+            if (beanFactory instanceof ApplicationContext)
+                set.addAll(Arrays.asList(((ApplicationContext) beanFactory).getBeanNamesForType(Contract.class)));
             while (iterator.hasNext()) {
                 Map.Entry<String, DefaultDependencyHolder.Dependency> next = iterator.next();
                 if (ClassUtils.isPrimaryParam(next.getValue().getCls()) && beanFactory.containsBean(StringUtils.uncapitalize(next.getValue().getCls().getSimpleName()))) {
                     next.getValue().setObj(beanFactory.getBean(next.getValue().getCls()));
+                }
+                if (next.getValue().getCls().equals(String.class) && set.contains(StringUtils.capitalize(next.getKey()))) {
+                    next.getValue().setObj(beanFactory.getBean(StringUtils.capitalize(next.getKey()), Contract.class).getContractAddress());
                 }
             }
         }
@@ -85,18 +81,4 @@ public class Web3jContractAutoConfiguration {
     }
 
 
-    public static class AddressPostProcessor implements CandidateMethodPostProcessor {
-
-        @Override
-        public void resolveCandidateMethodParams(DependencyHolder holder, BeanFactory beanFactory, Class<? extends Contract> cls) {
-            Iterator<Map.Entry<String, DefaultDependencyHolder.Dependency>> iterator = holder.getDependency().entrySet().iterator();
-            while (iterator.hasNext()) {
-                Map.Entry<String, DefaultDependencyHolder.Dependency> next = iterator.next();
-                if (next.getKey().equals("regAddr")) {
-                    UserContract userContract = beanFactory.getBean("UserContract", UserContract.class);
-                    next.getValue().setObj(userContract.getContractAddress());
-                }
-            }
-        }
-    }
 }

@@ -1,9 +1,12 @@
 package xyz.utools.web3j.factory;
 
 import lombok.Data;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.data.util.Lazy;
 import org.springframework.lang.Nullable;
 import org.web3j.crypto.Credentials;
@@ -16,7 +19,7 @@ import xyz.utools.web3j.inter.CandidateMethodComposite;
 
 @Data
 @EnableConfigurationProperties(Web3jProperties.class)
-public abstract class AbstractContractFactoryBeanSupport<T extends Contract> implements BeanFactoryAware, FactoryBean<T>, InitializingBean {
+public abstract class AbstractContractFactoryBeanSupport<T extends Contract> implements ApplicationContextAware, FactoryBean<T>, InitializingBean {
     @Autowired
     Web3jProperties properties;
     protected Class<T> cls;
@@ -30,13 +33,14 @@ public abstract class AbstractContractFactoryBeanSupport<T extends Contract> imp
     @Autowired
     protected ContractGasProvider contractGasProvider;
     protected Lazy<T> target;
-    protected BeanFactory beanFactory;
+    protected ApplicationContext beanFactory;
     //    public ClassLoader classLoader;
     protected AbstractContractFactorySupport factorySupport;
 
     public AbstractContractFactoryBeanSupport(Class<T> cls) {
         this.cls = cls;
     }
+
     @Autowired
     CandidateMethodComposite composite;
 
@@ -76,4 +80,9 @@ public abstract class AbstractContractFactoryBeanSupport<T extends Contract> imp
     }
 
     abstract AbstractContractFactorySupport createAbstractContractFactorySupport();
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.beanFactory = applicationContext;
+    }
 }

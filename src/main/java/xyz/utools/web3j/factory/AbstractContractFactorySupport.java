@@ -4,8 +4,11 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.util.Assert;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
@@ -24,8 +27,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Data
-public abstract class AbstractContractFactorySupport implements BeanFactoryAware {
-    BeanFactory beanFactory;
+public abstract class AbstractContractFactorySupport implements  ApplicationContextAware {
+    ApplicationContext beanFactory;
+    //    BeanFactory beanFactory;
     ClassLoader classLoader;
 
     Web3j web3j;
@@ -50,7 +54,8 @@ public abstract class AbstractContractFactorySupport implements BeanFactoryAware
     }
 
     public String getContractAddress() {
-        return properties.getContracts().get(cls.getSimpleName());
+        String s = properties.getContracts().get(cls.getSimpleName());
+        return s.equals("new") ? "new" : "0x" + s;
     }
 
     public String getMethodName() {
@@ -61,7 +66,8 @@ public abstract class AbstractContractFactorySupport implements BeanFactoryAware
         return Stream.of(cls.getMethods()).filter(method -> method.getModifiers() == 9 && method.getName().equals(getMethodName())).collect(Collectors.toList()).toArray(new Method[]{});
     }
 
-    private DependencyHolder findCandidateMethod(List<DependencyHolder> holders, Class<? extends Contract> cls, BeanFactory beanFactory) {
+    private DependencyHolder findCandidateMethod(List<DependencyHolder> holders, Class<? extends
+            Contract> cls, BeanFactory beanFactory) {
         DependencyHolder obj = null;
         for (CandidateMethodPostProcessor candidateMethodPostProcessor : composite.getAllCandidateMethodPostProcessor()) {
             obj = candidateMethodPostProcessor.findCandidateMethod(holders, cls);
@@ -134,5 +140,10 @@ public abstract class AbstractContractFactorySupport implements BeanFactoryAware
 
         t = invokeMethod(candidateMethod);
         return t;
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.beanFactory = applicationContext;
     }
 }

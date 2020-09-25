@@ -24,4 +24,8 @@ public abstract class AbstractSpringBootTest extends AbstractJUnit4SpringContext
     public void addProperties(String prefix, String... args) {
         TestPropertyValues.of(Stream.of(args).map(arg -> prefix + "." + arg)).applyTo(getConfigApplicationContext());
     }
+
+    public <T> T getSignalBean(Class<T> cls) {
+        return (T) applicationContext.getBean(cls);
+    }
 }

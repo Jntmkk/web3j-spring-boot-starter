@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Data
 @SpringBootTest(classes = {Web3jAutoConfiguration.class})
-@ActiveProfiles("test")
 class ClassUtilsTest extends AbstractSpringBootTest {
     @Test
     void isWeb3jContract() {

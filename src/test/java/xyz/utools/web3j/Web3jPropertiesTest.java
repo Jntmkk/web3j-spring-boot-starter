@@ -17,4 +17,8 @@ class Web3jPropertiesTest {
         list.add("D");
         log.info(list.toString());
     }
+    @Test
+    public void testCompile(){
+//        SolidityFunctionWrapperGenerator.main();
+    }
 }

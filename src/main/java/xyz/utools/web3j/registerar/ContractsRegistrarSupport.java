@@ -3,17 +3,22 @@ package xyz.utools.web3j.registerar;
 import lombok.Data;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConstructorArgumentValues;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.util.Assert;
 import org.web3j.tx.Contract;
+import xyz.utools.web3j.Web3jProperties;
 import xyz.utools.web3j.factory.ContractFactoryBean;
 import xyz.utools.web3j.util.ClassUtils;
 
@@ -26,7 +31,6 @@ import java.util.Set;
 @Data
 public abstract class ContractsRegistrarSupport implements ImportBeanDefinitionRegistrar, EnvironmentAware {
     Environment environment;
-
     @SneakyThrows
     @Override
     public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
