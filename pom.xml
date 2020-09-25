@@ -98,6 +98,7 @@
                 <configuration>
                     <source>1.8</source>   <!-- maven.compiler.source  -->
                     <target>1.8</target> <!-- maven.compiler.target -->
+                    <release>8</release>
                 </configuration>
             </plugin>
             <plugin>
