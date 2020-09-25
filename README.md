@@ -5,15 +5,15 @@
 
 示例应用[在此](https://)
 
-为了使用本工具，请包含以下依赖：
+~~为了使用本工具，请包含以下依赖：~~
 
-**暂时未发布到中央仓库**
+**Github Action 玩不明白,hhh**
 Maven:
 ```xml
 <dependency>
     <groupId>xyz.utools.web3j</groupId>
     <artifactId>web3j-spring-boot-starter</artifactId>
-    <version>lasted</version>
+<!--    <version>lasted</version>-->
 </dependency>
 ```
 
