@@ -16,6 +16,9 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <start-class>xyz.utools.web3j.Web3jContractAutoConfiguration</start-class>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
     </properties>
     <distributionManagement>
         <repository>
@@ -25,11 +28,6 @@
         </repository>
     </distributionManagement>
     <dependencies>
-        <!--        <dependency>-->
-        <!--            <groupId>org.fisco-bcos</groupId>-->
-        <!--            <artifactId>web3sdk</artifactId>-->
-        <!--            <version>2.0.2</version>-->
-        <!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -71,11 +69,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.9.8</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--            <artifactId>jackson-databind</artifactId>-->
+<!--            <version>2.9.8</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.squareup</groupId>
             <artifactId>javapoet</artifactId>
@@ -131,15 +129,6 @@
                     <pathPrefixes>
                         <pathPrefix>dep=../dependencies</pathPrefix>
                     </pathPrefixes>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
                 </configuration>
             </plugin>
         </plugins>
