@@ -8,7 +8,7 @@
         <version>2.3.4.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>xyz.utools</groupId>
+    <groupId>xyz.utools.web3j</groupId>
     <artifactId>web3j-spring-boot-starter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>web3j-spring-boot-starter</name>
@@ -25,7 +25,7 @@
         <repository>
             <id>github</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/utools/web3j-spring-boot-stater</url>
+            <url>https://maven.pkg.github.com</url>
         </repository>
     </distributionManagement>
     <dependencies>
