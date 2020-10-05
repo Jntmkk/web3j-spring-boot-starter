@@ -25,7 +25,7 @@
         <repository>
             <id>github</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com</url>
+            <url>https://maven.pkg.github.com/Jntmkk/web3j-spring-boot-starter</url>
         </repository>
     </distributionManagement>
     <dependencies>
